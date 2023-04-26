@@ -9,3 +9,4 @@ include:
 - ../container.yaml
 cloud-config-files:
 - ../nginx/config.cfg
+- ../nginx/demo.cfg
