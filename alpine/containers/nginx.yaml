@@ -1,0 +1,11 @@
+#lxdops
+os:
+  name: alpine
+origin: (nginx-origin)
+device-template: (nginx-template)
+profiles:
+  - default
+include:
+- ../container.yaml
+cloud-config-files:
+- ../nginx/config.cfg

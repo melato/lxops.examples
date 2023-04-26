@@ -1,0 +1,21 @@
+#lxdops
+os:
+  name: alpine
+  image: (alpine-image)
+description: General purpose base container.
+profiles:
+- default
+include:
+- ../../device/log.yaml
+cloud-config-files:  
+- ../base/packages.cfg
+- ../base/motd.cfg
+- ../base/dhcpcd.cfg
+- ../packages/user.cfg
+- ../interfaces.cfg
+- ../packages/base.cfg
+- ../packages/log.cfg
+- ../packages/net.cfg
+- ../timezone.cfg
+stop: true  
+snapshot: copy  

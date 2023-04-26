@@ -1,0 +1,10 @@
+#lxdops
+profile-pattern: (instance).lxdops
+device-owner: 1000000:1000000
+filesystems:
+  host:
+    pattern: (fsroot)/host/(instance)
+    destroy: true
+include:
+- host.yaml
+- log.yaml

@@ -1,0 +1,17 @@
+#lxdops
+devices:
+  etc:
+    path: /etc/opt
+    filesystem: host
+  opt:
+    path: /opt
+    filesystem: host
+  var:
+    path: /var/opt
+    filesystem: host
+  bin:
+    path: /usr/local/bin
+    filesystem: host
+  home:
+    path: /home
+    filesystem: host

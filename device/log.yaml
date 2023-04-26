@@ -1,0 +1,12 @@
+#lxdops
+profile-pattern: (instance).lxdops
+device-owner: 1000000:1000000
+filesystems:
+  log:
+    pattern: (fsroot)/log/(instance)
+    destroy: true
+devices:
+  log:
+    path: /var/log
+    filesystem: log
+    dir: "."
