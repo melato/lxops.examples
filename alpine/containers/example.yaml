@@ -1,0 +1,12 @@
+#lxops-v1
+# A first example.  Uses a standard image from images:
+# Applies cloud-config files
+ostype: alpine
+image: images:alpine/3.18
+profiles:
+- default
+cloud-config-files:  
+- ../cfg/motd.cfg
+- ../cfg/doas.cfg
+- ../packages/dhcpcd.cfg
+- ../cfg/interfaces.cfg

@@ -1,4 +1,4 @@
-#lxdops
+#lxops-v1
 profile-pattern: (instance).lxdops
 device-owner: 1000000:1000000
 filesystems:

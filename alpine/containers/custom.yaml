@@ -1,0 +1,16 @@
+#lxops-v1
+# launch a container from a custom image and attached devices
+# You first need to create the custom image
+ostype: alpine
+image: (custom-template)
+device-template: (custom-template)
+profiles:
+- default
+include:
+- ../../device/standard.yaml
+cloud-config-files:  
+- ../cfg/doas.cfg
+- ../cfg/interfaces.cfg
+- ../cfg/user.cfg
+- ../cfg/ssh.cfg
+

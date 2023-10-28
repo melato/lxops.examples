@@ -1,0 +1,13 @@
+#lxops-v1
+# launch a container with attached ZFS devices that are managed by lxops
+# this requires the fsroot property to be set to a ZFS filesystem
+# for example:  lxops property set fsroot z/
+# It also uses an alpine-image property to specify the image to use
+ostype: alpine
+image: (alpine-image)
+profiles:
+- default
+include:
+- ../../device/standard.yaml
+cloud-config-files:  
+- ../cfg/interfaces.cfg

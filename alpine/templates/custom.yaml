@@ -1,0 +1,20 @@
+#lxops-v1
+# This is used to create a custom image
+# It uses the property 'alpine-image'
+# You can set this property like this:
+#   lxops property set alpine-image images:alpine/3.18
+# Configuration mainly installs packages
+# Any other configuration can be done in the containers that are launched from this image,
+# so the configuration can be easily refined without reinstalling packages and building a new image.
+ostype: alpine
+image: (alpine-image)
+profiles:
+- default
+include:
+- ../../device/log.yaml
+cloud-config-files:  
+- ../packages/basic.cfg
+- ../packages/custom.cfg
+- ../cfg/motd.cfg
+stop: true
+snapshot: copy

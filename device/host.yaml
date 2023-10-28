@@ -1,4 +1,4 @@
-#lxdops
+#lxops-v1
 devices:
   etc:
     path: /etc/opt
