@@ -11,8 +11,7 @@ profiles:
 include:
 - ../../device/log.yaml
 cloud-config-files:  
-- ../packages/basic.cfg
+- ../packages/base.cfg
 - ../nginx/packages.cfg
-- ../cfg/motd.cfg
 stop: true
 snapshot: copy

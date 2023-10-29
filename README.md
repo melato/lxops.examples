@@ -1,31 +1,41 @@
 lxops.examples demonstrates how to use [lxops](https://github.com/melato/lxops)
-to create and configure LXD or Incus containers
+to create and configure LXD or Incus containers.
+It is provided as a tutorial, and is subject to change.
 
 # resources used
 
 ## LXD or Incus
 These examples use an LXD or Incus installation.
 
-Use a new LXD/Incus installation, so that you don't accidentally ruin your existing system.
+Use a new test system, so that you don't accidentally ruin your existing system.
 
-lxops creates and deletes LXD/Incus containers and profiles.  It also creates and destroys ZFS filesystems.
+lxops creates and deletes LXD or Incus containers and profiles.  It also creates and destroys ZFS filesystems.
 
 ## ZFS
 lxops uses "sudo zfs" commands to create, destroy, snapshot, and rollback filesystems that are attached as disk devices
 to the containers it builds.
 
 The locations of these filesystems are user-defined by lxops global properties and configuration files.
-They should be different from the LXD/Incus storage filesystems.
+They should be different from the LXD or Incus storage filesystems.
 
 The first example, example.yaml, does not use disk devices, so it can be used without ZFS.
 
 ## lxops
-There is no lxops executable distributed.  You can build either
+There is no lxops executable distributed.  You can build it from source using either
 [lxops-lxd](https://github.com/melato/lxops_lxd)
 or [lxops-incus](https://github.com/melato/lxops_incus)
-from source, and then rename it to "lxops" (or create a symbolic link).
+
+Rename it to "lxops" (or create a symbolic link).
 
 Use the appropriate lxops executable for your instance server.
+
+For example, to build lxops_lxd:
+
+	git clone https://github.com/melato/lxops_lxd
+	cd lxops_lxd/main
+	date > version
+	go build lxops-lxd.go
+	sudo cp lxops-lxd /usr/local/bin/lxops 
 
 # run the examples
 All the examples use alpine images.
@@ -34,14 +44,19 @@ All the examples use alpine images.
 	cd alpine/containers
 	lxops launch -name example1 example.yaml
 
-This example shows how to launch a container from an image, configure profiles and run cloud-config files.
-It does not create any disk devices for the container.
-It does not use any lxops properties.  It is hardcoded to use a specific publicly-available image.
+This creates container "example1" and profile "example1.lxops".  The profile is empty in this example.
 
-# configure lxops global properties
-The remaining examples use two lxops properties, which you can set as follows:
+The example shows how to launch a container from an image, configure profiles and run cloud-config files.
+It is uses a specific publicly-available image.
+
+
+# nginx template and container
+The nginx examples create a custom image, and use it to launch and rebuild containers with attached devices.
+ 
+## configure lxops global properties
+The nginx example uses two lxops properties, which you can set as follows:
 - select a base alpine image to use, typically the latest, for example images:alpine/3.18
-- select a root ZFS filesystem to use, for example z/demo.
+- select a root ZFS filesystem to use, for example z/demo
   zfs must be able to create this filesystem with: sudo zfs create -p.
 
 Run:
@@ -49,68 +64,79 @@ Run:
 	lxops property set alpine-image images:alpine/3.18
 	lxops property set fsroot z/demo
 
-
-# launch devices.yaml
-	cd alpine/containers
-	lxops launch -name d1 devices.yaml
-
-This example:
-- creates zfs filesystems z/demo/host/d1, z/demo/log/d1, z/demo/tmp/d1
-- creates subdirectories in these filesystems
-- sets the ownership of these subdirectories so they are seen as owned by root when attached to a container
-- adds the subdirectories as disk devices to a new profile named d1.lxops
-- creates a container named "d1" with the specified profiles and the d1.lxops profile
-- configures the container by running cloud-config files
-
-# rebuild devices.yaml
-	lxops rebuild -name d1 devices.yaml
-
-This example:
-- retrieves the profiles attached to the container and the network hwaddr of the container
-- stops and deletes the container
-- rebuilds the d1.lxops profile
-- launches the container again, with the previous profiles and the previous hwaddr
-  The goal of preserving hwaddr is to preserve the container ip addresses, if they are provided via dhcp.
-  There are flags to skip this part, if the ip addresses are statically provided separately (via profiles).
-
-In essence, this updates the guest OS of the container, while preserving data in attached devices, and configuration (profiles, ip addresses).
-
-# delete d1 devices.yaml
-	lxops delete -name d1 devices.yaml
-	
-This deletes container d1 and profile d1.lxops.  It does not delete or destroy the attached devices.
-The deleted container can be launched again with the existing devices.
-
-# destroy d1 devices.yaml
-	lxops destroy -name d1 devices.yaml
-	
-This deletes and destroys everything associated with container d1:
-- It deletes container d1
-- It deletes profile d1.lxops
-- It destroys the zfs filesystems that were attached to the container
-
-# create nginx template
+## create nginx image
 	cd alpine/templates
 	./build.sh nginx
-	
-This example:
-- creates a container, with a timestamp in its name
-- attaches a newly created ZFS filesystem to the /var/log directory of the container
-- installs packages via cloud-config files
-- stops the container
-- makes a snapshot
-- publishes this snapshot as an image with the same alias as the container name
-- exports the image to a file, so it can be imported to another system
-- creates a tar.gz archive of /var/log, so it can be imported to another system
-- sets the nginx-template property to the name of the container
 
-# create a container from the nginx template
+This:
+- creates a log filesystem: <fsroot>/log/<container>
+
+- creates a container with the log filesystem attached to /var/log
+- configures the container by installing packages
+- makes a snapshot of the container and publishes the snapshot as an image
+- exports the image to disk in ./images/<container>/
+- exports the log filesystem as a tar.gz file
+- sets the lxops propety "nginx-template" to the name of the image
+
+The container and the image have a demo- prefix and a datetime suffix.
+
+## launch nginx container
 	cd alpine/containers
 	lxops launch -name n1 nginx.yaml
 
-This example performs similar steps as the devices.yaml example above.
-Additionally:
-- it copies files from the nginx template log filesystem
-- it configures nginx to include /etc/opt/nginx/*.conf;  /etc/opt is an external device, so it is preserved during a rebuild.
-- it configures a demo nginx to include /etc/opt/nginx/*.conf;  /etc/opt is an external device, so it is preserved during a rebuild.
+This:
+- creates zfs filesystems <fsroot>/host/n1, <fsroot>/log/n1, <fsroot>/tmp/n1,
+  as specified in nginx.yaml
+- creates subdirectories in these filesystems
+- copies files from the template (in this case /var/log/)
+- adds the subdirectories as disk devices to a new profile named n1.lxops
+- creates a container named "n1" with the specified profiles and the n1.lxops profile
+- configures the container by running cloud-config files
 
+The container can be tested using
+	curl http://<ip>/a.txt
+
+You start a shell in the container and make changes to /var/opt/nginx and /etc/opt/nginx
+These changes will be preserved when you delete and relaunch the container.
+
+## create new nginx image
+We will create a new nginx image, as we did before, so that we demonstrate rebuilding the container with a new image:
+
+	cd alpine/templates
+	./build.sh nginx
+
+The name used for the image includes a timestamp in it, so the old image and the new image can coexist.
+The nginx-template property is set to the new image.
+If the new image doesn't work, you can set nginx-template back to the old image.
+
+## launch a test container with the new image
+	cd alpine/containers
+	lxops launch -name n2 nginx.yaml
+
+Once you test n2, you can delete it:
+
+	cd alpine/containers
+	lxc stop n2
+	# or incus stop n2
+	lxops destroy -name n2 nginx.yaml
+
+## rebuild n1 with the new image
+	cd alpine/containers
+	lxops rebuild -name n1 nginx.yaml
+
+This will relaunch the container with the new image and the old devices. 
+Because of the way the container is configured, the nginx configuration and website files will be preserved.
+
+## delete the old template
+	cd alpine/templates
+	lxops destroy -name <old-image> nginx.yaml
+
+# delete vs destroy
+
+The delete command deletes the container and its profile, but not the attached filesystems.
+The destroy command also destroys the filesystems specified in .yaml file.
+The container must be stopped already.
+
+	cd alpine/containers
+	lxops delete -name n1 nginx.yaml
+	lxops destroy -name n1 nginx.yaml

@@ -6,7 +6,7 @@ image: images:alpine/3.18
 profiles:
 - default
 cloud-config-files:  
-- ../cfg/motd.cfg
+- ../packages/base.cfg
+- ../packages/bash.cfg
 - ../cfg/doas.cfg
-- ../packages/dhcpcd.cfg
-- ../cfg/interfaces.cfg
+- ../cfg/user.cfg

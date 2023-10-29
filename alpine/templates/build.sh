@@ -30,3 +30,4 @@ lxops launch -name $INAME ${name}.yaml || exit 1
 lxops property set ${name}-template $INAME
 lxops instance publish $INAME copy $INAME
 lxops export -image -d $IMAGE_DIR -name $INAME ${name}.yaml
+lxops delete -name $INAME nginx.yaml

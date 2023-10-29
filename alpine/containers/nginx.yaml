@@ -10,6 +10,5 @@ include:
 - ../../device/standard.yaml
 cloud-config-files:  
 - ../cfg/doas.cfg
-- ../cfg/interfaces.cfg
 - ../nginx/demo.cfg
 - ../nginx/config.cfg
