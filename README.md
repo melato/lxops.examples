@@ -89,24 +89,28 @@ This deletes and destroys everything associated with container d1:
 - It deletes profile d1.lxops
 - It destroys the zfs filesystems that were attached to the container
 
-# create custom image/template
+# create nginx template
 	cd alpine/templates
-	./build-image.sh custom
+	./build.sh nginx
 	
 This example:
 - creates a container, with a timestamp in its name
 - attaches a newly created ZFS filesystem to the /var/log directory of the container
-- configures the container with cloud-config files
-- stops it
+- installs packages via cloud-config files
+- stops the container
 - makes a snapshot
 - publishes this snapshot as an image with the same alias as the container name
 - exports the image to a file, so it can be imported to another system
 - creates a tar.gz archive of /var/log, so it can be imported to another system
-- sets the custom-template property to the name of the container
+- sets the nginx-template property to the name of the container
 
-# create a container from the custom template
+# create a container from the nginx template
 	cd alpine/containers
-	lxops launch -name c1 custom.yaml
+	lxops launch -name n1 nginx.yaml
 
 This example performs similar steps as the devices.yaml example above.
-Additionally, it copies files from the log filesystem that was created when the custom template was created.
+Additionally:
+- it copies files from the nginx template log filesystem
+- it configures nginx to include /etc/opt/nginx/*.conf;  /etc/opt is an external device, so it is preserved during a rebuild.
+- it configures a demo nginx to include /etc/opt/nginx/*.conf;  /etc/opt is an external device, so it is preserved during a rebuild.
+

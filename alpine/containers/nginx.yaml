@@ -1,0 +1,15 @@
+#lxops-v1
+# launch a container from the nginx template
+# You first need to create the nginx template
+ostype: alpine
+image: (nginx-template)
+device-template: (nginx-template)
+profiles:
+- default
+include:
+- ../../device/standard.yaml
+cloud-config-files:  
+- ../cfg/doas.cfg
+- ../cfg/interfaces.cfg
+- ../nginx/demo.cfg
+- ../nginx/config.cfg

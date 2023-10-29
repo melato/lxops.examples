@@ -20,7 +20,7 @@ END
 fi
 
 DATE=`date +%Y%m%d-%H%M`
-PREFIX=a
+PREFIX=demo
 name=$1
 INAME=${PREFIX}-${name}-$DATE
 IMAGE_DIR=images/$INAME
