@@ -1,9 +1,9 @@
 #lxops-v1
-profile-pattern: (instance).lxdops
+profile-pattern: (instance).lxops
 device-owner: 1000000:1000000
 filesystems:
   tmp:
-    pattern: (fsroot)/tmp/(instance)
+    pattern: (tmproot)/(instance)
     destroy: true
     transient: true
 devices:
