@@ -4,4 +4,4 @@
 # uses gotemplate (not inluded here)
 
 cd ..
-gotemplate -files -t doc/readme.tpl -o README.md
+gotemplate -files -o README.md -t readme.tpl doc/*.tpl
