@@ -27,6 +27,8 @@ cd alpine/templates
 ./build.sh ssh
 ```
 
+the build.sh script calls a combination of *incus* and *lxops* commands
+
 ## create containers using the ssh image
 First create template disk devices for these containers:
 ```
@@ -72,7 +74,7 @@ In this case, we include *../container.yaml*
 {{file "alpine/container.yaml"}}
 ```
 
-container.yaml contains common configuration for
+container.yaml contains common configuration
 that is included by several of our containers.
 
 It includes several other yaml and cloud-config files.
