@@ -1,9 +1,6 @@
 ## create an ssh image
 
-We will use alpine/templates/ssh.yaml:
-```
-{{file "alpine/templates/ssh.yaml"}}
-```
+{{template "file.tpl" "alpine/templates/ssh.yaml"}}
 
 The first line, "#lxops-v1", identifies this file as an lxops file.
 
@@ -48,10 +45,7 @@ lxops launch -name s2 ssh.yaml
 ...
 ```
 
-#### alpine/containers/ssh.yaml
-```
-{{file "alpine/containers/ssh.yaml"}}
-```
+{{template "file.tpl" "alpine/containers/ssh.yaml"}}
 
 This file has the same format as templates/ssh.yaml.
 
@@ -69,10 +63,7 @@ se we can use the same lxops property for both.
 
 In this case, we include *../container.yaml*
 
-#### alpine/container.yaml
-```
-{{file "alpine/container.yaml"}}
-```
+{{template "file.tpl" "alpine/container.yaml"}}
 
 container.yaml contains common configuration
 that is included by several of our containers.
@@ -82,17 +73,9 @@ You can read them to see what they do.
 
 Some selected files are shown here:
 
-##### alpine/base/ssh_host_keys.cfg
-```
-{{file "alpine/base/ssh_host_keys.cfg"}}
-```
+{{template "file.tpl" "alpine/base/ssh_host_keys.cfg"}}
 
-
-
-##### device/standard.yaml
-```
-{{file "device/standard.yaml"}}
-```
+{{template "file.tpl" "device/standard.yaml"}}
 
 This file specifies our *standard* disk devices.
 These are disk devices that are attached to the container and are persisted.
@@ -108,10 +91,7 @@ We define 5 disk devices in it, that are mounted in the container at:
 - /opt
 - /var/opt
 
-##### device/host.yaml
-```
-{{file "device/host.yaml"}}
-```
+{{template "file.tpl" "device/host.yaml"}}
 
 host.yaml specifies the *host* filesystem.
 
@@ -122,17 +102,11 @@ that we're launching.
 
 You can read about the remaining fields by running *lxops help config*
 
-##### device/log.yaml
-```
-{{file "device/log.yaml"}}
-```
+{{template "file.tpl" "device/log.yaml"}}
 
 log.yaml specifies the /var/log disk device, in its own zfs filesystem.
 
-##### device/tmp.yaml
-```
-{{file "device/tmp.yaml"}}
-```
+{{template "file.tpl" "device/tmp.yaml"}}
 
 tmp.yaml specifies the /tmp disk device, in its own zfs filesystem.
 It has a *transient* property.  A *transient* filesystem is ignored
@@ -144,10 +118,7 @@ It is included only if the *local_alpine* property is defined.
 
 demo/setup.sh sets *local_alpine* to demo/local_alpine (using an absolute path).
 
-##### demo/local_alpine/container.yaml
-```
-{{file "demo/local_alpine/container.yaml"}}
-```
+{{template "file.tpl" "demo/local_alpine/container.yaml"}}
 
 This specifies a list of profiles which we want most of our containers to have.
 and a user that will be created in each container.
