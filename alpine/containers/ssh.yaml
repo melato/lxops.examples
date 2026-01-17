@@ -1,0 +1,6 @@
+#lxops-v1
+ostype: alpine
+image: (alpine-ssh-example)
+device-template: (alpine-ssh-example)
+include:
+- ../container.yaml

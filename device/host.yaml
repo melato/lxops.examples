@@ -1,17 +1,7 @@
 #lxops-v1
-devices:
-  etc:
-    path: /etc/opt
-    filesystem: host
-  opt:
-    path: /opt
-    filesystem: host
-  var:
-    path: /var/opt
-    filesystem: host
-  bin:
-    path: /usr/local/bin
-    filesystem: host
-  home:
-    path: /home
-    filesystem: host
+profile-pattern: (instance).lxops
+device-owner: 1000000:1000000
+filesystems:
+  host:
+    pattern: (fshost)/(instance)
+    destroy: true

@@ -1,0 +1,20 @@
+#lxops-v1
+ostype: alpine
+image: (alpine-tinyproxy-example)
+description: |
+    basic tinyproxy container
+    It just has tinyproxy, and attached disk devices
+    It depends on two profiles which we do not define.
+    the root profile should assign the root disk device, without any network
+    the tinyproxy.network profile should have a proxy device that maps port 8888
+    from the host to the container.
+    To use:
+    - enter a shell
+    - edit /etc/tinyproxy/tinyproxy.conf
+    - service tinyproxy start
+profiles:
+- root
+- tinyproxy.network
+cloud-config-files:
+- ../base/nogetty.cfg
+- ../base/sudo.cfg

@@ -1,0 +1,14 @@
+#lxops-v1
+ostype: alpine
+image: (alpine-haproxy-example)
+device-template: (alpine-haproxy-example)
+profiles:
+# root should setup the root disk device
+# haproxy.network should setup proxy devices for ports 80, 443.
+- root
+- haproxy.network
+include:
+- ../container.yaml
+- ../haproxy/container.yaml
+cloud-config-files:
+- ../base/reboot.cfg

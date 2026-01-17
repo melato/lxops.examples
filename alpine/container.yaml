@@ -1,0 +1,12 @@
+#lxops-v1
+# common alpine container configuration
+include:
+- ../device/standard.yaml
+- ../device/tmp.yaml
+- (local_alpine)/container.yaml
+cloud-config-files:
+- base/nogetty.cfg
+- base/etc.cfg
+- base/sudo.cfg
+- base/sshd.cfg
+- base/ssh_host_keys.cfg

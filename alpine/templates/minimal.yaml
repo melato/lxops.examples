@@ -1,0 +1,7 @@
+#lxops-v1
+description: dhcp client only
+ostype: alpine
+image: (alpine-image)
+cloud-config-files:
+- ../packages/dhcpcd.cfg
+- ../base/motd.cfg

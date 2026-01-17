@@ -1,0 +1,3 @@
+#lxops-v1
+cloud-config-files:
+- service.cfg

@@ -5,4 +5,5 @@ device-template: (alpine-nginx-example)
 include:
 - ../container.yaml
 cloud-config-files:
+- ../nginx/offline.cfg
 - ../nginx/config.cfg

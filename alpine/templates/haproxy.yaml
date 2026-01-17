@@ -1,7 +1,7 @@
 #lxops-v1
-description: nginx
+description: haproxy template
 ostype: alpine
 image: (alpine-ssh-example)
 cloud-config-files:
-- ../nginx/packages.cfg
+- ../haproxy/packages.cfg
 - ../base/motd.cfg

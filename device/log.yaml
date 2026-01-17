@@ -3,10 +3,10 @@ profile-pattern: (instance).lxops
 device-owner: 1000000:1000000
 filesystems:
   log:
-    pattern: (fsroot)/log/(instance)
+    pattern: (fslog)/(instance)
     destroy: true
 devices:
   log:
     path: /var/log
     filesystem: log
-    dir: "."
+    dir: .

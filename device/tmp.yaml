@@ -3,11 +3,11 @@ profile-pattern: (instance).lxops
 device-owner: 1000000:1000000
 filesystems:
   tmp:
-    pattern: (tmproot)/(instance)
+    pattern: (fstmp)/(instance)
     destroy: true
     transient: true
 devices:
   tmp:
     path: /tmp
     filesystem: tmp
-    dir: "."
+    dir: .

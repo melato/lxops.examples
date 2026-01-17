@@ -1,0 +1,5 @@
+#lxops-v1
+profiles:
+- default
+cloud-config-files:
+- user.cfg

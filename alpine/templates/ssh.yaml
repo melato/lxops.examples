@@ -1,0 +1,8 @@
+#lxops-v1
+description: ssh server
+ostype: alpine
+image: (alpine-image)
+cloud-config-files:
+- ../packages/dhcpcd.cfg
+- ../packages/openssh.cfg
+- ../base/motd.cfg

@@ -1,11 +1,20 @@
 #lxops-v1
-profile-pattern: (instance).lxops
-device-owner: 1000000:1000000
-filesystems:
-  host:
-    pattern: (fsroot)/host/(instance)
-    destroy: true
+devices:
+  bin:
+    path: /usr/local/bin
+    filesystem: host
+  etc:
+    path: /etc/opt
+    filesystem: host
+  home:
+    path: /home
+    filesystem: host
+  opt:
+    path: /opt
+    filesystem: host
+  var:
+    path: /var/opt
+    filesystem: host
 include:
 - host.yaml
 - log.yaml
-- tmp.yaml
