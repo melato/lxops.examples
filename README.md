@@ -37,7 +37,7 @@ zfs filesystems that will be used by the examples.
 
 ## create an ssh image
 
-We will use alpine/templates/ssh.yaml:
+**alpine/templates/ssh.yaml**
 ```
 #lxops-v1
 description: ssh server
@@ -49,6 +49,7 @@ cloud-config-files:
 - ../base/motd.cfg
 
 ```
+
 
 The first line, "#lxops-v1", identifies this file as an lxops file.
 
@@ -72,6 +73,8 @@ cd alpine/templates
 ./build.sh ssh
 ```
 
+the build.sh script calls a combination of *incus* and *lxops* commands
+
 ## create containers using the ssh image
 First create template disk devices for these containers:
 ```
@@ -91,7 +94,7 @@ lxops launch -name s2 ssh.yaml
 ...
 ```
 
-#### alpine/containers/ssh.yaml
+**alpine/containers/ssh.yaml**
 ```
 #lxops-v1
 ostype: alpine
@@ -101,6 +104,7 @@ include:
 - ../container.yaml
 
 ```
+
 
 This file has the same format as templates/ssh.yaml.
 
@@ -118,7 +122,7 @@ se we can use the same lxops property for both.
 
 In this case, we include *../container.yaml*
 
-#### alpine/container.yaml
+**alpine/container.yaml**
 ```
 #lxops-v1
 # common alpine container configuration
@@ -135,7 +139,8 @@ cloud-config-files:
 
 ```
 
-container.yaml contains common configuration for
+
+container.yaml contains common configuration
 that is included by several of our containers.
 
 It includes several other yaml and cloud-config files.
@@ -143,7 +148,7 @@ You can read them to see what they do.
 
 Some selected files are shown here:
 
-##### alpine/base/ssh_host_keys.cfg
+**alpine/base/ssh_host_keys.cfg**
 ```
 #cloud-config
 # create new ssh host keys once, and copy them to a persisted directory,
@@ -163,8 +168,7 @@ runcmd:
 ```
 
 
-
-##### device/standard.yaml
+**device/standard.yaml**
 ```
 #lxops-v1
 devices:
@@ -189,6 +193,7 @@ include:
 
 ```
 
+
 This file specifies our *standard* disk devices.
 These are disk devices that are attached to the container and are persisted.
 If we delete the container the disk devices will not be deleted.
@@ -203,7 +208,7 @@ We define 5 disk devices in it, that are mounted in the container at:
 - /opt
 - /var/opt
 
-##### device/host.yaml
+**device/host.yaml**
 ```
 #lxops-v1
 profile-pattern: (instance).lxops
@@ -215,6 +220,7 @@ filesystems:
 
 ```
 
+
 host.yaml specifies the *host* filesystem.
 
 **pattern** specifies the name of the filesystem.
@@ -224,7 +230,7 @@ that we're launching.
 
 You can read about the remaining fields by running *lxops help config*
 
-##### device/log.yaml
+**device/log.yaml**
 ```
 #lxops-v1
 profile-pattern: (instance).lxops
@@ -241,9 +247,10 @@ devices:
 
 ```
 
+
 log.yaml specifies the /var/log disk device, in its own zfs filesystem.
 
-##### device/tmp.yaml
+**device/tmp.yaml**
 ```
 #lxops-v1
 profile-pattern: (instance).lxops
@@ -261,6 +268,7 @@ devices:
 
 ```
 
+
 tmp.yaml specifies the /tmp disk device, in its own zfs filesystem.
 It has a *transient* property.  A *transient* filesystem is ignored
 by certain lxops commands.  For more information, run: *lxops help filesystem*
@@ -271,7 +279,7 @@ It is included only if the *local_alpine* property is defined.
 
 demo/setup.sh sets *local_alpine* to demo/local_alpine (using an absolute path).
 
-##### demo/local_alpine/container.yaml
+**demo/local_alpine/container.yaml**
 ```
 #lxops-v1
 profiles:
@@ -280,6 +288,7 @@ cloud-config-files:
 - user.cfg
 
 ```
+
 
 This specifies a list of profiles which we want most of our containers to have.
 and a user that will be created in each container.
