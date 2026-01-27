@@ -1,0 +1,8 @@
+input_dir: pages
+output_dir: ./target
+input_ext: .tpl
+output_ext: .md 
+template:
+    dir: common
+    patterns:
+    - "*.tpl"

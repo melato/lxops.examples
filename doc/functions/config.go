@@ -10,11 +10,20 @@ import (
 type ConfigMethods struct {
 }
 
+type ConfigArgs struct {
+	Path  string
+	Model any
+}
+
+func (t *ConfigMethods) Args(path string, model any) ConfigArgs {
+	return ConfigArgs{path, model}
+}
+
 func (t *ConfigMethods) ReadRaw(filename string) (*cfg.Config, error) {
 	return cfg.ReadConfigYaml(filename)
 }
 
-func (t *ConfigMethods) Read(filename string, properties map[string]any) (*cfg.Config, error) {
+func (t *ConfigMethods) Read(filename string, properties map[any]any) (*cfg.Config, error) {
 	get := func(name string) (string, bool) {
 		value, found := properties[name]
 		fmt.Printf("get(%s): %v(%T)\n", name, value, value)

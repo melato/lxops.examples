@@ -14,10 +14,10 @@ import (
 var version string
 
 func main() {
-	var op gotemplate.TemplateOp
-	funcs.AddFuncs(&op)
-	functions.AddFuncs(&op)
-	cmd := cli.Command(&op)
+	var fc gotemplate.FuncConfig
+	funcs.AddFuncs(&fc)
+	functions.AddFuncs(&fc)
+	cmd := cli.Command(&fc)
 	cmd.Command("version").NoConfig().RunFunc(func() {
 		fmt.Printf("%s\n", version)
 	}).Short("print version")

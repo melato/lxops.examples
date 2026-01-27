@@ -13,9 +13,9 @@ type Funcs interface {
 }
 
 func AddFuncs(funcs Funcs) {
-	funcs.SetFunc("args", Args)
 	funcs.SetFunc("yaml", PrintYaml)
 	funcs.SetFunc("strings", func() *Strings { return &Strings{} })
+	funcs.SetFunc("File", func() *File { return &File{} })
 	funcs.SetFunc("Config", func() *ConfigMethods { return &ConfigMethods{} })
 	funcs.AddUsageTxt(funcUsage)
 }
