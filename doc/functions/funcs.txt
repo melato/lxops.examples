@@ -1,9 +1,0 @@
-yaml
-  convert a value to yaml, and return it as a string
-args
-  construct an []any, from its individual elements
-strings
-  return a new Strings
-Config
-  returns a new ConfigMethods
-  which has methods for dealing with Config objects
