@@ -18,3 +18,4 @@ devices:
 include:
 - host.yaml
 - log.yaml
+- tmp.yaml

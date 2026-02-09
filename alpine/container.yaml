@@ -2,7 +2,6 @@
 # common alpine container configuration
 include:
 - ../device/standard.yaml
-- ../device/tmp.yaml
 - (local_alpine)/container.yaml
 cloud-config-files:
 - base/nogetty.cfg
