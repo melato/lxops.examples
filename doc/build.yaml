@@ -1,8 +1,10 @@
 input_dir: pages
-output_dir: ./target
+output_dir: ./md
 input_ext: .tpl
 output_ext: .md 
-template:
-    dir: common
-    patterns:
-    - "*.tpl"
+properties:
+  local_alpine: ../doc/local_alpine
+templates:
+- dir: /var/opt/dev/go/lxops.template/templates
+  patterns:
+  - "*.*"
